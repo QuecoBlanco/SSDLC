@@ -18,6 +18,7 @@ public class RBAC {
         Scanner s = new Scanner(System.in);
         Usuario u = new Usuario();
         boolean salir = false;
+        ArrayList<Usuario> a = new ArrayList<Usuario>();
         
         do{
             System.out.println("Introduce nombre de usuario:");
@@ -28,10 +29,11 @@ public class RBAC {
             u.setRol(rol);
         
             String r = DeterminarRol(u);
+            a.add(u);
             
             if(null != r)switch (r) {
                 case "admin":
-                    VistaAdmin(u);
+                    VistaAdmin(a, u);
                     salir=true;
                     break;
                 case "gest":
@@ -54,21 +56,22 @@ public class RBAC {
         String rol = usuario.getRol();
         return rol;   
     }
-    public static void VistaAdmin(Usuario u){
+    public static void VistaAdmin(ArrayList<Usuario> a, Usuario u){
         
         Scanner s = new Scanner(System.in);
+        Usuario p = new Usuario();
         boolean salir = false;
         int opcion;
-        ArrayList<Usuario> a = new ArrayList<Usuario>();
-        Usuario p = new Usuario();
         
         do{
             System.out.println("1-Agregar Usuario");
             System.out.println("2-Modificar Usuario");
             System.out.println("3-Eliminar Usuario");
-            System.out.println("4-Listar Usuario");
+            System.out.println("4-Listar Usuario\n");
             System.out.println("5-Salir");
-
+            /*if(a.size()>1){
+                System.out.println("6-Cambiar de Usuario");
+            }*/
             System.out.println("Elige la opcion:");
             opcion=s.nextInt();
             String r = DeterminarRol(u);
@@ -79,16 +82,7 @@ public class RBAC {
                        if(!"admin".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           System.out.println("Introduce nombre de usuario:");
-                           String nom = s.nextLine();
-                           System.out.println("Introduce el rol del usuario (admin, gest o asist):");
-                           String rol = s.nextLine();
-                           p.setNom(nom);
-                           p.setRol(rol);
-                           a.add(u);
-                           a.add(p);
-                           
-                           
+                            AgregarUsuario(a, u);
                        }
                        break;
                    case 2:
@@ -104,9 +98,7 @@ public class RBAC {
                        if(!"admin".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           for(Usuario t : p){
-                               System.out.println(t);
-                           }
+                  
                        }
                        break;
                     case 4:
@@ -114,14 +106,23 @@ public class RBAC {
                        if(!"admin".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           
+                           ListarUsuario(a, u);
                        }
                        break;
+                    /*case 6:
+                       if(a.size()<1){
+                           System.out.println("Ningun Usuario a quien cambiar");
+                       }else{
+                           p=CambiarUsuario(a, u);
+                           u=p;
+                       }
+                       break;*/
                     case 5:
                        salir=true;
                        break;
                     default:
                        System.out.println("Solo números entre 1 y 5");
+                       
                }
         }while(!salir);
         
@@ -203,6 +204,31 @@ public class RBAC {
                        System.out.println("Solo números entre 1 y 2");
                }
         }while(!salir);
+        
+        
     }
+    
+    public static void AgregarUsuario(ArrayList<Usuario> a, Usuario u){
+        Scanner s = new Scanner(System.in);
+        Usuario p = new Usuario();
+        
+        System.out.println("Introduce nombre de usuario:");
+        String nom = s.nextLine();
+        System.out.println("Introduce el rol del usuario (admin, gest o asist):");
+        String rol = s.nextLine();
+        p.setNom(nom);
+        p.setRol(rol);
+        a.add(p);
+    }
+    public static void ListarUsuario(ArrayList<Usuario> a, Usuario u){
+        for (Usuario usuario : a) {
+            System.out.println(usuario.nom +" "+ usuario.rol);
+        }
+        
+    }
+    
+    //public static Usuario CambiarUsuario(ArrayList<Usuario> a, Usuario u){
+        
+    //}
     
 }
