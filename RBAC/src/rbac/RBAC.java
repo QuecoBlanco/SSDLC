@@ -37,11 +37,11 @@ public class RBAC {
                     salir=true;
                     break;
                 case "gest":
-                    VistaGestor(u);
+                    VistaGestor(a, u);
                     salir=true;
                     break;
                 case "asist":
-                    VistaAsistente(u);
+                    VistaAsistente(a, u);
                     salir=true;
                     break;
                 default:
@@ -127,7 +127,7 @@ public class RBAC {
         }while(!salir);
         
     }
-    public static void VistaGestor(Usuario u){
+    public static void VistaGestor(ArrayList<Usuario> a, Usuario u){
         Scanner s = new Scanner(System.in);
         boolean salir = false;
         int opcion;
@@ -148,7 +148,7 @@ public class RBAC {
                        if(!"gest".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           
+                           AgregarUsuario(a, u);
                        }
                        break;
                    case 2:
@@ -164,7 +164,7 @@ public class RBAC {
                        if(!"gest".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           
+                           ListarUsuario(a, u);
                        }
                        break;
                     case 4:
@@ -175,7 +175,7 @@ public class RBAC {
                }
         }while(!salir);
     }
-    public static void VistaAsistente(Usuario u){
+    public static void VistaAsistente(ArrayList<Usuario> a, Usuario u){
         Scanner s = new Scanner(System.in);
         boolean salir = false;
         int opcion;
@@ -194,7 +194,7 @@ public class RBAC {
                        if(!"asist".equals(r)){
                            System.out.println("Usuario No Autorizado");
                        }else{
-                           
+                           ListarUsuario(a, u);
                        }
                        break;
                     case 2:
